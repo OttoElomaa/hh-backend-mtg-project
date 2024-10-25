@@ -77,10 +77,17 @@ public class MtgProjectApplication {
 			if (dataList != null) {
                 for (Map<String, Object> item : dataList) {
 
+					// FIX FOR MULTI-FACED CARDS (Saga+Creature etc.)
+					List<Map<String, Object>> faces = (List<Map<String, Object>>) item.get("card_faces");
+					if (faces != null) {
+						item = faces.get(0);
+					}
+
+					// NAME, TYPE_LINE
                     String name = (String) item.get("name");
 					String typeText = (String) item.get("type_line");
 					
-					
+					//ORACLE_TEXT HANDLING FOR NULL + TOO LONG
 					String oracl = (String) item.get("oracle_text");
 					if (oracl == null) {
 						oracl = "Oracle Text";
