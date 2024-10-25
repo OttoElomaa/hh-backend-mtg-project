@@ -105,12 +105,14 @@ public class MtgProjectApplication {
 					manaCostStr = "Free";
 				}
 
+				List<String> producedMana = (List<String>) item.get("produced_mana");
+
 				//log.info(name);
 				
 				// MOST IMPORTANT PART
 				// Create and add a new Card to the list
 				Card card = new Card("a1a1", name, oracl,imgUrl,"Set of Setness",
-			typeText, manaCostStr, list2, power, toughness);
+			typeText, manaCostStr, producedMana, power, toughness);
 				oldCards.add(card);
 			}
 		}
