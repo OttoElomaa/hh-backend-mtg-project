@@ -51,6 +51,28 @@ public class MtgProjectApplication {
 	}
 
 
+	private static String itemGetStringOrAltText(Map<String, Object> item, String keyword, String altText) {
+
+		String newWord = (String) item.get(keyword);
+		if (newWord == null) {
+			newWord = "Oracle Text";
+		}
+		return newWord;
+	}
+
+
+	private static int itemGetIntOrAlt(Map<String, Object> item, String keyword) {
+
+		String getStr = (String) item.get(keyword);
+		int returnInt = -999;
+		if (getStr != null) {
+			returnInt = Integer.parseInt(getStr);
+		}
+		return returnInt;
+	}
+
+
+
 	//  testidatan luonti H2-testitietokantaan aina sovelluksen käynnistyessä
 	@Bean
 	public CommandLineRunner MtgAppRunner(CardRepository cardRepository, RestTemplate restTemplate) { 
@@ -87,20 +109,22 @@ public class MtgProjectApplication {
                     String name = (String) item.get("name");
 					String typeText = (String) item.get("type_line");
 					
-					//ORACLE_TEXT HANDLING FOR NULL + TOO LONG
-					String oracl = (String) item.get("oracle_text");
-					if (oracl == null) {
-						oracl = "Oracle Text";
-					}
-					else if (oracl.length() > 200) {
+					// ORACLE_TEXT HANDLING FOR NULL + TOO LONG
+					String oracl = itemGetStringOrAltText(item, "oracle_text", "Oracle Text Missing");
+					if (oracl.length() > 200) {
 						oracl = oracl.substring(0, 199);
 					}
 					
+					// IMAGE URL
 					Map<String, Object> imagesListUrl = (Map<String, Object>) item.get("image_uris");
 					String imgUrl = "";
 					if (imagesListUrl != null) {
 						imgUrl = (String) imagesListUrl.get("normal");
 					}
+
+					//String powerStr = (String) item.get("power");
+					int power = itemGetIntOrAlt(item, "power");
+					int toughness = itemGetIntOrAlt(item, "toughness");
 					
 					
 					log.info(name);
@@ -108,7 +132,7 @@ public class MtgProjectApplication {
 
                     // Create and add a new Card to the list
                     Card card = new Card("a1a1", name, oracl,imgUrl,"Set of Setness",
-				typeText, list1, list2, 2, 3);
+				typeText, list1, list2, power, toughness);
                     cards.add(card);
                 }
             }
