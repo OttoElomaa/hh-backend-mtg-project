@@ -26,7 +26,7 @@ public class Card {
 	private String setName;
 	private String typeText;
 
-	private List<String> manaCost;
+	private String manaCost;
 	private List<String> producedMana;
 
 	private int power;
@@ -34,7 +34,7 @@ public class Card {
 
 
 	public Card(String cardId, String cardName, String oracleText, String imageUrl, String setName,
-			String typeText, List<String> manaCost, List<String> producedMana, int power, int toughness) {
+			String typeText, String manaCost, List<String> producedMana, int power, int toughness) {
 		
 		this.cardId = cardId;
 		this.cardName = cardName;
@@ -111,10 +111,10 @@ public class Card {
 	}
 
 
-	public List<String> getManaCost() {
+	public String getManaCost() {
 		return manaCost;
 	}
-	public void setManaCost(List<String> manaCost) {
+	public void setManaCost(String manaCost) {
 		this.manaCost = manaCost;
 	}
 
