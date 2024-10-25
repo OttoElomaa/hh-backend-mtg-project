@@ -78,7 +78,16 @@ public class MtgProjectApplication {
                 for (Map<String, Object> item : dataList) {
 
                     String name = (String) item.get("name");
-					//String oracl = (String) item.get("oracle_text");
+					String typeText = (String) item.get("type_line");
+					
+					
+					String oracl = (String) item.get("oracle_text");
+					if (oracl == null) {
+						oracl = "Oracle Text";
+					}
+					else if (oracl.length() > 200) {
+						oracl = oracl.substring(0, 199);
+					}
 					
 					Map<String, Object> imagesListUrl = (Map<String, Object>) item.get("image_uris");
 					String imgUrl = "";
@@ -91,8 +100,8 @@ public class MtgProjectApplication {
                     //String imgSmall = (String) item.get("imgSmall"); // Extract the imgSmall URL
 
                     // Create and add a new Card to the list
-                    Card card = new Card("a1a1", name, "Cool Card",imgUrl,"Set of Setness",
-				"Creature - Cool Wolf", list1, list2, 2, 3);
+                    Card card = new Card("a1a1", name, oracl,imgUrl,"Set of Setness",
+				typeText, list1, list2, 2, 3);
                     cards.add(card);
                 }
             }
