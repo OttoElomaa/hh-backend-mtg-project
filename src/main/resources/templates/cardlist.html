@@ -10,9 +10,6 @@
 
 <body>
 
-	<header>
-
-	</header>
 
 	<h1>Card List</h1>
 	<table class="table table-striped">
@@ -29,6 +26,7 @@
 
 			<th>Power</th>
 			<th>Toughness</th>
+			<th></th>
 		
 		</tr></thead>
 		<tbody>
@@ -46,6 +44,8 @@
 
 			<td th:text="${card.power}">id</td>
 			<td th:text="${card.toughness}">id</td>
+
+			<td><a th:href="@{/viewcard/{id}(id=${card.id})}"><button type="button" class="btn btn-primary">View + Options</button>
 		</tr>
 	</tbody>
 
