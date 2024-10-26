@@ -5,6 +5,7 @@
 <title>MTG App - Card List</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
 </head>
 
 <body>
@@ -15,6 +16,7 @@
 
 	<h1>Card List</h1>
 	<table class="table table-striped">
+		<thead>
 		<tr>
 			<th>Card Image</th>
 			<th>Card Name</th>
@@ -28,8 +30,8 @@
 			<th>Power</th>
 			<th>Toughness</th>
 		
-		</tr>
-
+		</tr></thead>
+		<tbody>
 		<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
 		THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
 		<tr th:each="card : ${cards}">
@@ -45,6 +47,7 @@
 			<td th:text="${card.power}">id</td>
 			<td th:text="${card.toughness}">id</td>
 		</tr>
+	</tbody>
 
 	</table>
 
