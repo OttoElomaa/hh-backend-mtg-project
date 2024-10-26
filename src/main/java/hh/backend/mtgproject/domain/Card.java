@@ -25,6 +25,7 @@ public class Card {
 	private String imageUrl;
 	private String setName;
 	private String typeText;
+	private String[] colorIdentity;
 
 	private String manaCost;
 	private List<String> producedMana;
@@ -33,8 +34,12 @@ public class Card {
 	private int toughness;
 
 
+
+
+
 	public Card(String cardId, String cardName, String oracleText, String imageUrl, String setName,
-			String typeText, String manaCost, List<String> producedMana, int power, int toughness) {
+			String typeText, String[] colorIdentity, String manaCost, List<String> producedMana, int power,
+			int toughness) {
 		
 		this.cardId = cardId;
 		this.cardName = cardName;
@@ -42,11 +47,14 @@ public class Card {
 		this.imageUrl = imageUrl;
 		this.setName = setName;
 		this.typeText = typeText;
+		this.colorIdentity = colorIdentity;
 		this.manaCost = manaCost;
 		this.producedMana = producedMana;
 		this.power = power;
 		this.toughness = toughness;
 	}
+
+
 
 
 	public Card() {

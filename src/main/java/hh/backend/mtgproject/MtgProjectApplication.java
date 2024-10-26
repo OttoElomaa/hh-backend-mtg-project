@@ -59,6 +59,7 @@ public class MtgProjectApplication {
 		List<Card> newCards = new ArrayList<Card>();
 
 		ArrayList<String> list2 = new ArrayList<>();
+		String[] array1 = {"a","b"};
 
 		// SOURCE: Geeks for Geeks. How to Call or Consume External API in Spring Boot?
 		// https://www.geeksforgeeks.org/how-to-call-or-consume-external-api-in-spring-boot/
@@ -107,12 +108,27 @@ public class MtgProjectApplication {
 
 				List<String> producedMana = (List<String>) item.get("produced_mana");
 
+				// LIST TO ARRAY. SOURCE: Eng.Fouad on StackOverflow. Question - Convert list to array in Java [duplicate]
+				// https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
+
+				String[] colorIds = {};
+				List<String> colorIdList = (List<String>) item.get("color_identity");
+				
+				if (colorIdList != null) {
+					colorIds = (new String[colorIdList.size()]);
+					for(int i = 0; i < colorIdList.size(); i++) {
+						colorIds[i] = colorIdList.get(i);
+					};
+				}
+
+				
+
 				//log.info(name);
 				
 				// MOST IMPORTANT PART
 				// Create and add a new Card to the list
 				Card card = new Card("a1a1", name, oracl,imgUrl,"Set of Setness",
-			typeText, manaCostStr, producedMana, power, toughness);
+			typeText, colorIds, manaCostStr, producedMana, power, toughness);
 				oldCards.add(card);
 			}
 		}
@@ -156,7 +172,10 @@ public class MtgProjectApplication {
 
 			
 			ArrayList<String> list2 = new ArrayList<>();
+			String[] array1 = {"a","b"};
 
+			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
+			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
 			
@@ -168,10 +187,10 @@ public class MtgProjectApplication {
 			}
 
 			Card card1 = new Card("a1a1", "Cool Guy", "This guy is cool","https://cards.scryfall.io/normal/front/1/5/153b7197-57a7-4e38-bd4a-4550b9d22dd8.jpg?1562900088","Set of Setness",
-			"Creature - Cool Human", "G", list2, 3, 4);
+			"Creature - Cool Human", array1, "G", list2, 3, 4);
 
 			Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set of Setness",
-			"Creature - Cool Wolf", "G", list2, 2, 3);
+			"Creature - Cool Wolf", array1,"G", list2, 2, 3);
 
 
 			//bookRepository.save(new Book("The Hobbit, or There and Back Again", "J. R. R. Tolkien", 1937L, "9780345445605", 25D, cat2));	
