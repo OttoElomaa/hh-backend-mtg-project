@@ -75,9 +75,13 @@ public class MtgProjectApplication {
 			for (Map<String, Object> item : dataList) {
 
 				// FIX FOR MULTI-FACED CARDS (Saga+Creature etc.)
+				// ALSO SKIP MULTI-PART CARD ENTRIES
 				List<Map<String, Object>> faces = (List<Map<String, Object>>) item.get("card_faces");
+				List<Map<String, Object>> parts = (List<Map<String, Object>>) item.get("all_parts");
 				if (faces != null) {
 					item = faces.get(0);
+				} else if (parts != null) {
+					continue;
 				}
 
 				// NAME, TYPE_LINE
@@ -111,15 +115,15 @@ public class MtgProjectApplication {
 				// LIST TO ARRAY. SOURCE: Eng.Fouad on StackOverflow. Question - Convert list to array in Java [duplicate]
 				// https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
 
-				String[] colorIds = {};
+				//String[] colorIds = {};
 				List<String> colorIdList = (List<String>) item.get("color_identity");
-				
-				if (colorIdList != null) {
-					colorIds = (new String[colorIdList.size()]);
-					for(int i = 0; i < colorIdList.size(); i++) {
-						colorIds[i] = colorIdList.get(i);
-					};
-				}
+
+				// if (colorIdList != null) {
+				// 	colorIds = (new String[colorIdList.size()]);
+				// 	for(int i = 0; i < colorIdList.size(); i++) {
+				// 		colorIds[i] = colorIdList.get(i);
+				// 	};
+				// } // SOURCED PART ENDS
 
 				
 
@@ -128,7 +132,7 @@ public class MtgProjectApplication {
 				// MOST IMPORTANT PART
 				// Create and add a new Card to the list
 				Card card = new Card("a1a1", name, oracl,imgUrl,"Set of Setness",
-			typeText, colorIds, manaCostStr, producedMana, power, toughness);
+			typeText, colorIdList, manaCostStr, producedMana, power, toughness);
 				oldCards.add(card);
 			}
 		}
@@ -176,8 +180,15 @@ public class MtgProjectApplication {
 
 			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
 			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo", cards, templ);
+			// add: 
+
+			//cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=neo", cards, templ);
+			
+			//cards = readApiToCardList("", cards, templ);
 			
 			// ADD THE TEST DATA: CARDS
 			log.info("In App: Save a couple of cards");
@@ -186,16 +197,16 @@ public class MtgProjectApplication {
 				cardRepository.save(card);
 			}
 
-			Card card1 = new Card("a1a1", "Cool Guy", "This guy is cool","https://cards.scryfall.io/normal/front/1/5/153b7197-57a7-4e38-bd4a-4550b9d22dd8.jpg?1562900088","Set of Setness",
-			"Creature - Cool Human", array1, "G", list2, 3, 4);
+			//Card card1 = new Card("a1a1", "Cool Guy", "This guy is cool","https://cards.scryfall.io/normal/front/1/5/153b7197-57a7-4e38-bd4a-4550b9d22dd8.jpg?1562900088","Set of Setness",
+			//"Creature - Cool Human", list2, "G", list2, 3, 4);
 
-			Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set of Setness",
-			"Creature - Cool Wolf", array1,"G", list2, 2, 3);
+			//Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set of Setness",
+			//"Creature - Cool Wolf", list2,"G", list2, 2, 3);
 
 
 			//bookRepository.save(new Book("The Hobbit, or There and Back Again", "J. R. R. Tolkien", 1937L, "9780345445605", 25D, cat2));	
-			cardRepository.save(card1);
-			cardRepository.save(card2);
+			//cardRepository.save(card1);
+			//cardRepository.save(card2);
 
 			
 

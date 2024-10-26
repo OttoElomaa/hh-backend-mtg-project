@@ -25,7 +25,7 @@ public class Card {
 	private String imageUrl;
 	private String setName;
 	private String typeText;
-	private String[] colorIdentity;
+	private List<String> colorIdentity;
 
 	private String manaCost;
 	private List<String> producedMana;
@@ -38,7 +38,7 @@ public class Card {
 
 
 	public Card(String cardId, String cardName, String oracleText, String imageUrl, String setName,
-			String typeText, String[] colorIdentity, String manaCost, List<String> producedMana, int power,
+			String typeText, List<String> colorIdentity, String manaCost, List<String> producedMana, int power,
 			int toughness) {
 		
 		this.cardId = cardId;
@@ -150,6 +150,15 @@ public class Card {
 		this.toughness = toughness;
 	}
 
+	
+	public List<String> getColorIdentity() {
+		return colorIdentity;
+	}
+
+	public void setColorIdentity(List<String> colorIdentity) {
+		this.colorIdentity = colorIdentity;
+	}
+
 
 	@Override
 	public String toString() {
@@ -157,6 +166,10 @@ public class Card {
 				+ ", imageUrl=" + imageUrl + ", setName=" + setName + ", typeText=" + typeText + ", manaCost="
 				+ manaCost + ", producedMana=" + producedMana + ", power=" + power + ", toughness=" + toughness + "]";
 	}
+
+
+
+
 
 	
 	
