@@ -1,0 +1,41 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>MTG App - User List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
+</head>
+
+<body>
+
+
+	<h1>User List</h1>
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>User Id</th>
+			<th>User Name</th>
+			<th>Profile Name</th>
+			<th>Profile Bio</th>
+			<th></th>
+		
+		</tr></thead>
+		<tbody>
+		<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
+		THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
+		<tr th:each="user : ${mtgUsers}">
+			<td th:text="${user.userName}">id</td>
+			<td th:text="${user.profileName}">id</td>
+			<td th:text="${user.profileBio}">id</td>
+
+			<td><a th:href="@{/viewuser/{id}(id=${user.userId})}"><button type="button" class="btn btn-primary">View + Options</button>
+		</tr>
+	</tbody>
+
+	</table>
+
+</body>
+</html>
