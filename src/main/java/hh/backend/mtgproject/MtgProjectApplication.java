@@ -19,7 +19,8 @@ import org.springframework.web.client.RestTemplate;
 
 import hh.backend.mtgproject.domain.Card;
 import hh.backend.mtgproject.domain.CardRepository;
-
+import hh.backend.mtgproject.domain.MtgUser;
+import hh.backend.mtgproject.domain.MtgUserRepository;
 
 
 
@@ -170,13 +171,18 @@ public class MtgProjectApplication {
 
 	//  testidatan luonti H2-testitietokantaan aina sovelluksen käynnistyessä
 	@Bean
-	public CommandLineRunner MtgAppRunner(CardRepository cardRepository, RestTemplate templ) { 
+	public CommandLineRunner MtgAppRunner(CardRepository cardRepository, RestTemplate templ, MtgUserRepository userRepository) { 
 		
 		return (args) -> {
 
 			
 			ArrayList<String> list2 = new ArrayList<>();
 			String[] array1 = {"a","b"};
+
+
+			// ADD USERS TO DATABASE
+			userRepository.save(new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user"));
+			userRepository.save(new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user"));
 
 			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
 			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
@@ -203,11 +209,7 @@ public class MtgProjectApplication {
 			//Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set of Setness",
 			//"Creature - Cool Wolf", list2,"G", list2, 2, 3);
 
-
-			//bookRepository.save(new Book("The Hobbit, or There and Back Again", "J. R. R. Tolkien", 1937L, "9780345445605", 25D, cat2));	
-			//cardRepository.save(card1);
-			//cardRepository.save(card2);
-
+			
 			
 
 

@@ -17,30 +17,30 @@
 
 
 	<div class="container text-center">
-
+		
+		<!--ROW 1: HEADLINE - CARD NAME-->
 		<div class="row">
 			<div class="col">
 				<h1 th:text="${selectedCard.cardName}">Card Info</h1>
 			</div>
 		</div>
 
+		<!--ROW 2 - IMAAGE AND INFO-->
 		<div class="row">
 
+			<!--COLUMN 2.1: CARD IMAGE-->
 			<div class="col">
 				<img th:src="${selectedCard.imageUrl}" width="400" />
 			</div>
 
 
-
+			<!--COLUMN 2.2: CARD INFO TABLE-->
 			<div class="col">
 
 				<table class="table table-dark table-striped-columns">
 
 					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col"></th>
-						</tr>
+				
 					</thead>
 
 					<tbody>
