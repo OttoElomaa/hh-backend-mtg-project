@@ -187,8 +187,13 @@ public class MtgProjectApplication {
 			userRepository.save(user1);
 			userRepository.save(new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user"));
 
-			deckRepository.save(new Deck("Deck 1", "Cool deck of cards", user1));
-			deckRepository.save(new Deck("Deck 2", "Cool deck 2", user1));
+			Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
+			deck1.setUser(user1);
+			Deck deck2 = new Deck("Deck 2", "Cool deck 2");
+			deck2.setUser(user1);
+
+			deckRepository.save(deck1);
+			deckRepository.save(deck2);
 
 			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
 			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
@@ -198,7 +203,7 @@ public class MtgProjectApplication {
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=neo", cards, templ);
+			//cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=neo", cards, templ);
 			
 			//cards = readApiToCardList("", cards, templ);
 			

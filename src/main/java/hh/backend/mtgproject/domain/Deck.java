@@ -35,10 +35,9 @@ public class Deck {
 	}
 
 
-	public Deck(String name, String description, MtgUser user) {
+	public Deck(String name, String description) {
 		this.name = name;
 		this.description = description;
-		this.user = user;
 	}
 
 
