@@ -19,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 
 import hh.backend.mtgproject.domain.Card;
 import hh.backend.mtgproject.domain.CardRepository;
+import hh.backend.mtgproject.domain.Deck;
+import hh.backend.mtgproject.domain.DeckRepository;
 import hh.backend.mtgproject.domain.MtgUser;
 import hh.backend.mtgproject.domain.MtgUserRepository;
 
@@ -171,7 +173,7 @@ public class MtgProjectApplication {
 
 	//  testidatan luonti H2-testitietokantaan aina sovelluksen käynnistyessä
 	@Bean
-	public CommandLineRunner MtgAppRunner(CardRepository cardRepository, RestTemplate templ, MtgUserRepository userRepository) { 
+	public CommandLineRunner MtgAppRunner(CardRepository cardRepository, RestTemplate templ, MtgUserRepository userRepository, DeckRepository deckRepository) { 
 		
 		return (args) -> {
 
@@ -179,10 +181,14 @@ public class MtgProjectApplication {
 			ArrayList<String> list2 = new ArrayList<>();
 			String[] array1 = {"a","b"};
 
+			MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
 
 			// ADD USERS TO DATABASE
-			userRepository.save(new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user"));
+			userRepository.save(user1);
 			userRepository.save(new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user"));
+
+			deckRepository.save(new Deck("Deck 1", "Cool deck of cards", user1));
+			deckRepository.save(new Deck("Deck 2", "Cool deck 2", user1));
 
 			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
 			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
