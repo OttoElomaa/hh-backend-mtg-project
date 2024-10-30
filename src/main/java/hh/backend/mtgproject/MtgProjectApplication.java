@@ -226,7 +226,7 @@ public class MtgProjectApplication {
 
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF
-			log.info("In app: Fetch all books");
+			log.info("In app: Fetch all cards");
 			for (Card card : cardRepository.findAll()) {
 				log.info(card.toString());
 			}

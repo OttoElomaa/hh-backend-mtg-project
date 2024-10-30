@@ -77,7 +77,7 @@ public class DeckController {
 
 		addCardToDeck(card, deck);
 
-		return "redirect:/cardlist";
+		return "redirect:/viewdeck/" + deck.getDeckId().toString();
 	}
 
 }
