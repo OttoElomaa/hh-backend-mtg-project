@@ -1,11 +1,13 @@
 package hh.backend.mtgproject.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 
 
 @Entity
@@ -34,6 +36,8 @@ public class Card {
 	private int toughness;
 
 
+	@ManyToMany(mappedBy = "cardsInDeck")
+	Set<Deck> inDecks;
 
 
 
@@ -159,6 +163,18 @@ public class Card {
 		this.colorIdentity = colorIdentity;
 	}
 
+	public Set<Deck> getInDecks() {
+		return inDecks;
+	}
+
+
+
+
+	public void setInDecks(Set<Deck> inDecks) {
+		this.inDecks = inDecks;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -166,6 +182,11 @@ public class Card {
 				+ ", imageUrl=" + imageUrl + ", setName=" + setName + ", typeText=" + typeText + ", manaCost="
 				+ manaCost + ", producedMana=" + producedMana + ", power=" + power + ", toughness=" + toughness + "]";
 	}
+
+
+
+
+	
 
 
 

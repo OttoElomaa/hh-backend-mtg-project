@@ -80,6 +80,27 @@
 			</div>
 
 		</div>
+
+
+		<!-- ADD TO DECK SELECTOR -->
+		<div class="row">
+
+			<form th:action="@{/savecardindeck}" action="#" method="post">
+
+				<input type="hidden" th:name="cardId" th:value="${selectedCard.id}" />
+	
+				<label for="decklist">Category</label>
+				<select id="decklist" th:name="deckId" class="form-control">
+				<option th:each="d: ${currentUser.decks}"
+				th:value="${d.deckId}"
+				th:text="${d.name}"></option>
+				</select>
+				<br/>
+	
+				<input type="submit" value="Save"></input>
+			</form>
+
+		</div>
 	</div>
 
 </body>
