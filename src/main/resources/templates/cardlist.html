@@ -2,61 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>MTG App - Card List</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
-<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
+	<title>MTG App - Card List</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
 </head>
 
 <body>
 
-	<header>
-		<a th:href="@{/index}"><button type="button" class="btn btn-primary">Index</button></a>
-		<a th:href="@{/userlist}"><button type="button" class="btn btn-info">Users</button></a>
-		<a th:href="@{/cardlist}"><button type="button" class="btn btn-primary">Cards</button></a>
-	</header>
-	<br/><br/>
+	<div class="container text-center">
+		<header>
+			<div th:replace="~{fragments :: headerfragment}"></div>
+		</header>
+		<br /><br />
 
 
-	<h1>Card List</h1>
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th>Card Image</th>
-			<th>Card Name</th>
-			<th>OracleText</th>
-			<th>Type Text</th>
 
-			<th>Colors</th>
-			<th>Mana Cost</th>
-			<th>Produced Mana</th>
 
-			<th>Power</th>
-			<th>Toughness</th>
-			<th></th>
-		
-		</tr></thead>
-		<tbody>
-		<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
+		<h1>Card List</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Card Image</th>
+					<th>Card Name</th>
+					<th>OracleText</th>
+					<th>Type Text</th>
+
+					<th>Colors</th>
+					<th>Mana Cost</th>
+					<th>Produced Mana</th>
+
+					<th>Power</th>
+					<th>Toughness</th>
+					<th></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
 		THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
-		<tr th:each="card : ${cards}">
-			<td><img th:src="${card.imageUrl}" width=200/></td>
-			<td th:text="${card.cardName}">id</td>
-			<td th:text="${card.oracleText}">id</td>
-			<td th:text="${card.typeText}">id</td>
+				<tr th:each="card : ${cards}">
+					<td><img th:src="${card.imageUrl}" width=200 /></td>
+					<td th:text="${card.cardName}">id</td>
+					<td th:text="${card.oracleText}">id</td>
+					<td th:text="${card.typeText}">id</td>
 
-			<td th:text="${card.colorIdentity}">id</td>
-			<td th:text="${card.manaCost}">id</td>
-			<td th:text="${card.producedMana}">id</td>
+					<td th:text="${card.colorIdentity}">id</td>
+					<td th:text="${card.manaCost}">id</td>
+					<td th:text="${card.producedMana}">id</td>
 
-			<td th:text="${card.power}">id</td>
-			<td th:text="${card.toughness}">id</td>
+					<td th:text="${card.power}">id</td>
+					<td th:text="${card.toughness}">id</td>
 
-			<td><a th:href="@{/viewcard/{id}(id=${card.id})}" type="button" class="btn btn-primary">View + Options</a></td>
-		</tr>
-	</tbody>
+					<td><a th:href="@{/viewcard/{id}(id=${card.id})}" type="button" class="btn btn-primary">View +
+							Options</a></td>
+				</tr>
+			</tbody>
 
-	</table>
+		</table>
+	</div>
 
 </body>
+
 </html>

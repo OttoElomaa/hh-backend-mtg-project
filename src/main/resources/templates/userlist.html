@@ -1,48 +1,50 @@
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>MTG App - User List</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
-<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
+	<title>MTG App - User List</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="/css/cardliststyle.css" th:href="@{/css/cardliststyle.css}" />
 </head>
 
 <body>
 
-	<header>
-		<a th:href="@{/index}"><button type="button" class="btn btn-primary">Index</button></a>
-		<a th:href="@{/userlist}"><button type="button" class="btn btn-info">Users</button></a>
-		<a th:href="@{/cardlist}"><button type="button" class="btn btn-primary">Cards</button></a>
-	</header>
-	<br/><br/>
+	<div class="container text-center">
+		<header>
+			<div th:replace="~{fragments :: headerfragment}"></div>
+		</header>
+		<br /><br />
 
 
-	<h1>User List</h1>
-	<table class="table table-striped">
-		<thead>
-		<tr>
-			<th>User Id</th>
-			<th>User Name</th>
-			<th>Profile Name</th>
-			<th>Profile Bio</th>
-			<th></th>
-		
-		</tr></thead>
-		<tbody>
-		<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
+		<h1>User List</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>User Id</th>
+					<th>User Name</th>
+					<th>Profile Name</th>
+					<th>Profile Bio</th>
+					<th></th>
+
+				</tr>
+			</thead>
+			<tbody>
+				<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
 		THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
-		<tr th:each="user : ${mtgUsers}">
-			<td th:text="${user.userName}">id</td>
-			<td th:text="${user.profileName}">id</td>
-			<td th:text="${user.profileBio}">id</td>
+				<tr th:each="user : ${mtgUsers}">
+					<td th:text="${user.userName}">id</td>
+					<td th:text="${user.profileName}">id</td>
+					<td th:text="${user.profileBio}">id</td>
 
-			<td><a th:href="@{/viewuser/{id}(id=${user.userId})}" type="button" class="btn btn-primary">View + Options</a></td>
-		</tr>
-	</tbody>
+					<td><a th:href="@{/viewuser/{id}(id=${user.userId})}" type="button" class="btn btn-primary">View +
+							Options</a></td>
+				</tr>
+			</tbody>
 
-	</table>
+		</table>
+	</div>
 
 </body>
+
 </html>

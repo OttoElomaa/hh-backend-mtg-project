@@ -18,6 +18,12 @@
 
 	<div class="container text-center">
 
+
+		<header>
+			<div th:replace="~{fragments :: headerfragment}"></div>
+		</header>
+		<br /><br />
+
 		<!--ROW 1: HEADLINE - CARD NAME-->
 		<div class="row">
 			<div class="col">
@@ -66,8 +72,8 @@
 						<td th:text="${deck.description}">id</td>
 
 						<td><a th:href="@{/viewdeck/{id}(id=${deck.deckId})}" type="button" class="btn btn-primary">
-							View + Options
-						</a></td>
+								View + Options
+							</a></td>
 					</tr>
 				</tbody>
 

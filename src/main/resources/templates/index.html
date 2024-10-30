@@ -2,32 +2,31 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Bookstore - Index</title>
+	<meta charset="UTF-8" />
+	<title>Bookstore - Index</title>
 
 
-    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 
 </head>
 
 <body>
 
-	<header>
-		<a th:href="@{/index}"><button type="button" class="btn btn-primary">Index</button></a>
-		<a th:href="@{/userlist}"><button type="button" class="btn btn-info">Users</button></a>
-		<a th:href="@{/cardlist}"><button type="button" class="btn btn-primary">Cards</button></a>
-	</header>
-	<br/><br/>
+	<div class="container text-center">
+		<header>
+			<div th:replace="~{fragments :: headerfragment}"></div>
+		</header>
+		<br /><br />
 
-    <h1>MTG App by Otto Elomaa</h1>
-    <p></p>
-    <p>Welcome to the MTG App!</p>
-	<br/>
-	<p>Currently only showing a limited amount of test data.</p>
+		<h1>MTG App by Otto Elomaa</h1>
+		<p></p>
+		<p>Welcome to the MTG App!</p>
+		<br />
+		<p>Currently only showing a limited amount of test data.</p>
 
 
- 
-   
+	</div>
+
 </body>
 
 </html>

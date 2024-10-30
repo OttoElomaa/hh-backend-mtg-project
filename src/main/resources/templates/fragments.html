@@ -1,1 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+
+<head>
+	<title>Thymeleaf Fragments: home</title>
+	<!--/*/ <th:block th:include="fragments/general.html :: headerfiles">
+        </th:block> /*/-->
+</head>
+
+<body>
+
+	<div th:fragment="headerfragment">
+
+		<div class="flex-row">
+			<a th:href="@{/index}"><button type="button" class="btn btn-primary">Index</button></a>
+			<a th:href="@{/userlist}"><button type="button" class="btn btn-info">Users</button></a>
+			<a th:href="@{/cardlist}"><button type="button" class="btn btn-primary">Cards</button></a>
+		</div>
+	</div>
+
+</body>
+
+</html>
