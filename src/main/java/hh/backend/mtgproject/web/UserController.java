@@ -1,5 +1,7 @@
 package hh.backend.mtgproject.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +20,13 @@ public class UserController {
 
 
 	@RequestMapping(value = "/userlist")
-	public String bookList(Model model) {
+	public String bookList(Model model, Principal principal) {
 		model.addAttribute("mtgUsers", repository.findAll());
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", repository.getByUserName(username));
+
 		return "userlist";
 	}
 

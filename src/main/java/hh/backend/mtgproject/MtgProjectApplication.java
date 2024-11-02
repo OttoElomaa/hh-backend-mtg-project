@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 import hh.backend.mtgproject.domain.AppUser;
@@ -26,13 +27,22 @@ import hh.backend.mtgproject.domain.MtgUserRepository;
 @SpringBootApplication
 public class MtgProjectApplication {
 
-	// CHATGPT START
+	
 	private List<Card> cards = new ArrayList<>();
 
+
+	// CHATGPT START
+	// RestTemplate Reads the API fetched info
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+	
+	// Define the PasswordEncoder bean
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 	// CHATGPT END
 
 	// CREATE NEW LOGGER ATTRIBUTE
@@ -152,7 +162,7 @@ public class MtgProjectApplication {
 
 	// testidatan luonti H2-testitietokantaan aina sovelluksen käynnistyessä
 	@Bean
-	public CommandLineRunner MtgAppRunner(RestTemplate templ,
+	public CommandLineRunner MtgAppRunner(RestTemplate templ, PasswordEncoder passwordEncoder,
 			CardRepository cardRepository, MtgUserRepository userRepository,
 			AppUserRepository appUserRepo, DeckRepository deckRepository) {
 
@@ -162,10 +172,10 @@ public class MtgProjectApplication {
 			// String[] array1 = {"a","b"};
 
 			MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
-
+			MtgUser user2 = new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user");
 			// ADD USERS TO DATABASE
 			userRepository.save(user1);
-			userRepository.save(new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user"));
+			userRepository.save(user2);
 
 			Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
 			deck1.setUser(user1);
@@ -208,12 +218,14 @@ public class MtgProjectApplication {
 			// of Setness",
 			// "Creature - Cool Wolf", list2,"G", list2, 2, 3);
 
-			// Username: user, password: user
-			appUserRepo.save(new AppUser("user",
-					"$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue", "USER"));
-			// Username: admin, password: admin
-			appUserRepo.save(new AppUser("admin",
-					"$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
+
+			// ENCODER.Encode WRITTEN USING ChatGpt
+			// Username: user1, user2, password: user1, user2
+			appUserRepo.save(new AppUser(user1.getUserName(),
+			passwordEncoder.encode("user1"), "USER"));
+	
+			appUserRepo.save(new AppUser(user2.getUserName(),
+			passwordEncoder.encode("user2"), "USER"));
 
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF
