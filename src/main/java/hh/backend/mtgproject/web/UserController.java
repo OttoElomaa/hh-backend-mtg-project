@@ -32,8 +32,13 @@ public class UserController {
 
 
 	@RequestMapping(value = "/viewuser/{id}")
-    public String viewUser(@PathVariable("id") Long userId, Model model) {
+    public String viewUser(@PathVariable("id") Long userId, Model model, Principal principal) {
         model.addAttribute("selectedUser", repository.findById(userId).get());
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", repository.getByUserName(username));
+
         return "viewuser";
     }
 

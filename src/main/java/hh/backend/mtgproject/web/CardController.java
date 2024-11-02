@@ -1,5 +1,7 @@
 package hh.backend.mtgproject.web;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,28 +29,27 @@ public class CardController {
 
 
     @RequestMapping(value = "/cardlist")
-    public String bookList(Model model) {
+    public String bookList(Model model, Principal principal) {
         model.addAttribute("cards", repository.findAll());
+
+        // KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", userRepository.getByUserName(username));
+
         return "cardlist";
     }
 
+
     @RequestMapping(value = "/viewcard/{id}")
-    public String viewCard(@PathVariable("id") Long cardId, Model model) {
+    public String viewCard(@PathVariable("id") Long cardId, Model model, Principal principal) {
         model.addAttribute("selectedCard", repository.findById(cardId).get());
         // REPLACE WITH PROPER USER HANDLING
-        model.addAttribute("currentUser", userRepository.getByUserName("user1"));
+        // KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", userRepository.getByUserName(username));
+
         return "viewcard";
     }
 
-    // @PostMapping("/savecardindeck")
-    // public String saveNewCardToDeck(@RequestParam Long cardId, @RequestParam Long deckId) {
-    //     // Use cardId and deckId to add the card to the deck
-    //     Card card = repository.findById(cardId).get();
-    //     Deck deck = deckRepository.findById(deckId).get();
-
-        
-
-    //     return "redirect:/success";
-    // }
-
+   
 }

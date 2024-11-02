@@ -28,6 +28,9 @@ public class DeckController {
 	@Autowired
 	private CardRepository cardRepository;
 
+
+
+
 	// FUNCTIONS ACTIVATED DURING THE ADDING OF NEW DECKS IN CREATEDECK.HTML
 
 	private void addCardToDeck(Card card, Deck deck) {
@@ -38,44 +41,62 @@ public class DeckController {
 		repository.save(deck);
 	}
 
+
+
+
 	// DECK CREATION
 	@RequestMapping(value = "/createdeck")
-	public String addBook(Model model) {
+	public String addBook(Model model, Principal principal) {
 		model.addAttribute("newDeck", new Deck());
-		// model.addAttribute("categories", repository.findAll());
+		
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", userRepository.getByUserName(username));
+
 		return "createdeck";
 	}
 
 	@PostMapping(value = "/savenew")
-	public String saveNew(Deck newDeck, Principal principal) {
+	public String saveNew(Deck newDeck, Model model, Principal principal) {
 		// LISÄÄ USER 1 NYKYISEKSI KÄYTTÄJÄKSI
-		MtgUser setUser = userRepository.getByUserName("user1");
+		String username = principal.getName();
+		MtgUser setUser = userRepository.getByUserName(username);
 
 		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
 		// String username = principal.getName();
 		newDeck.setUser(setUser);
 		repository.save(newDeck);
 
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		
+		model.addAttribute("currentUser", setUser);
 		return "redirect:/userlist";
 	}
 
 	// VIEW DECK
 	@RequestMapping(value = "/viewdeck/{id}")
-	public String viewCard(@PathVariable("id") Long deckId, Model model) {
+	public String viewCard(@PathVariable("id") Long deckId, Model model, Principal principal) {
 		model.addAttribute("selectedDeck", repository.findById(deckId).get());
-		// REPLACE WITH PROPER USER HANDLING
-		model.addAttribute("currentUser", userRepository.getByUserName("user1"));
+	
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", userRepository.getByUserName(username));
 		return "viewdeck";
 	}
 
 	// SAVE CARD IN DECK
 	@PostMapping("/savecardindeck")
-	public String saveNewCardToDeck(@RequestParam Long cardId, @RequestParam Long deckId) {
+	public String saveNewCardToDeck(@RequestParam Long cardId, @RequestParam Long deckId, 
+	Principal principal, Model model) {
 		// Use cardId and deckId to add the card to the deck
 		Card card = cardRepository.findById(cardId).get();
 		Deck deck = repository.findById(deckId).get();
 
 		addCardToDeck(card, deck);
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		String username = principal.getName();
+		model.addAttribute("currentUser", userRepository.getByUserName(username));
 
 		return "redirect:/viewdeck/" + deck.getDeckId().toString();
 	}

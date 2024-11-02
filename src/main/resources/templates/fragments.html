@@ -12,11 +12,14 @@
 <body>
 
 	<div th:fragment="headerfragment">
-
-		<div class="flex-row">
-			<a th:href="@{/index}"><button type="button" class="btn btn-primary">Index</button></a>
-			<a th:href="@{/userlist}"><button type="button" class="btn btn-info">Users</button></a>
-			<a th:href="@{/cardlist}"><button type="button" class="btn btn-primary">Cards</button></a>
+		<div class="container">
+			<div class="row">
+				<a th:href="@{/index}" class="col btn btn-primary">Index</a>
+				<a th:href="@{/userlist}" class="col btn btn-info">Users</a>
+				<a th:href="@{/cardlist}" class="col btn btn-primary">Cards</a>
+				<div class="col">Current user:</div>
+				<div class="col" th:text="${currentUser.profileName}"></div>
+			</div>
 		</div>
 	</div>
 
