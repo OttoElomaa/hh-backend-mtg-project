@@ -38,6 +38,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/index").permitAll()
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/cardlist").permitAll()
+                        .requestMatchers("/userlist").permitAll()
                         .requestMatchers(antMatcher("/css/**")).permitAll() // Enable css when logged out
                         .anyRequest().authenticated())
                 .formLogin(formlogin -> formlogin

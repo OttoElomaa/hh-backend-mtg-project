@@ -18,14 +18,23 @@ public class UserController {
 	private MtgUserRepository repository;
 
 
+	private static void setUserIfLogged(Principal principal, Model model, MtgUserRepository uRepository) {
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		if (principal != null) {
+			String username = principal.getName();
+			model.addAttribute("currentUser", uRepository.getByUserName(username));
+		} else {
+			System.out.println("No user Found!!");
+		}
+	}
+
 
 	@RequestMapping(value = "/userlist")
 	public String bookList(Model model, Principal principal) {
 		model.addAttribute("mtgUsers", repository.findAll());
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", repository.getByUserName(username));
+		setUserIfLogged(principal, model, repository);
 
 		return "userlist";
 	}
@@ -35,9 +44,7 @@ public class UserController {
     public String viewUser(@PathVariable("id") Long userId, Model model, Principal principal) {
         model.addAttribute("selectedUser", repository.findById(userId).get());
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", repository.getByUserName(username));
+		setUserIfLogged(principal, model, repository);
 
         return "viewuser";
     }

@@ -12,20 +12,30 @@ import hh.backend.mtgproject.domain.MtgUserRepository;
 @Controller
 public class IndexController {
 
-
 	@Autowired
 	private MtgUserRepository uRepository;
+
+
+	private static void setUserIfLogged(Principal principal, Model model, MtgUserRepository uRepository) {
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		if (principal != null) {
+			String username = principal.getName();
+			model.addAttribute("currentUser", uRepository.getByUserName(username));
+		} else {
+			System.out.println("No user Found!!");
+		}
+	}
+
 
 
 	@GetMapping(value = { "/", "/index" })
 	public String indexMethod(Model model, Principal principal) {
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", uRepository.getByUserName(username));
+		setUserIfLogged(principal, model, uRepository);
+		return "/index";
 
-		return "index";
+
 	}
-
 
 }
