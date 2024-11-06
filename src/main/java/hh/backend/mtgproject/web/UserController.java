@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import hh.backend.mtgproject.domain.MtgUser;
 import hh.backend.mtgproject.domain.MtgUserRepository;
 
 @Controller
@@ -42,10 +43,22 @@ public class UserController {
 
 	@RequestMapping(value = "/viewuser/{id}")
     public String viewUser(@PathVariable("id") Long userId, Model model, Principal principal) {
-        model.addAttribute("selectedUser", repository.findById(userId).get());
+        
+		MtgUser selectedUser = repository.findById(userId).get();
 
+		model.addAttribute("selectedUser", selectedUser);
 		setUserIfLogged(principal, model, repository);
 
+		// VERY CLEVER: IF LOOKING AT YOUR USER PAGE 
+		// (selectedUser MATCHES LOGGED USER) -> THEN SHOW PERSONAL PROFILE WITH EDIT TOOLS
+		if (principal != null) {
+
+			MtgUser currUser = repository.getByUserName(principal.getName());
+			if (currUser == selectedUser) {
+				return "myprofile";
+			}
+		}
+		// OTHERWISE, SHOW OTHER USER'S GENERIC USER PAGE
         return "viewuser";
     }
 
