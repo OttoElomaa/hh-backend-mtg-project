@@ -13,10 +13,10 @@
 	<div>
 		<form th:object="${newDeck}" th:action="@{savenew}" action="#" method="post">
 
-			<label for="name">Title</label>
+			<label for="name">Deck Name</label>
 			<input type="text" id="name" th:field="*{name}" />
 			<br/>
-			<label for="desc">Author</label>
+			<label for="desc">Description</label>
 			<input type="text" id="desc" th:field="*{description}" />
 			<br/>
 

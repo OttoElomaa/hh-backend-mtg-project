@@ -30,10 +30,23 @@ public class DeckController {
 
 
 
+	private static void setUserIfLogged(Principal principal, Model model, MtgUserRepository uRepository) {
+
+		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
+		if (principal != null) {
+			String username = principal.getName();
+			model.addAttribute("currentUser", uRepository.getByUserName(username));
+		} else {
+			System.out.println("No user Found!!");
+		}
+	}
+
 
 	// FUNCTIONS ACTIVATED DURING THE ADDING OF NEW DECKS IN CREATEDECK.HTML
 
 	private void addCardToDeck(Card card, Deck deck) {
+
+		//setUserIfLogged(principal, model, uRepository);
 
 		Set<Card> cardsInDeck = deck.getCardsInDeck();
 		cardsInDeck.add(card);
@@ -49,27 +62,21 @@ public class DeckController {
 	public String addBook(Model model, Principal principal) {
 		model.addAttribute("newDeck", new Deck());
 		
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", userRepository.getByUserName(username));
+		setUserIfLogged(principal, model, userRepository);
 
 		return "createdeck";
 	}
 
 	@PostMapping(value = "/savenew")
 	public String saveNew(Deck newDeck, Model model, Principal principal) {
-		// LISÄÄ USER 1 NYKYISEKSI KÄYTTÄJÄKSI
-		String username = principal.getName();
-		MtgUser setUser = userRepository.getByUserName(username);
+		
+		// LISÄÄ USER NYKYISEKSI KÄYTTÄJÄKSI
+		setUserIfLogged(principal, model, userRepository);
+		MtgUser setUser = userRepository.getByUserName(principal.getName());
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		// String username = principal.getName();
 		newDeck.setUser(setUser);
 		repository.save(newDeck);
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		
-		model.addAttribute("currentUser", setUser);
 		return "redirect:/userlist";
 	}
 
@@ -78,9 +85,7 @@ public class DeckController {
 	public String viewCard(@PathVariable("id") Long deckId, Model model, Principal principal) {
 		model.addAttribute("selectedDeck", repository.findById(deckId).get());
 	
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", userRepository.getByUserName(username));
+		setUserIfLogged(principal, model, userRepository);
 		return "viewdeck";
 	}
 
@@ -94,9 +99,7 @@ public class DeckController {
 
 		addCardToDeck(card, deck);
 
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		String username = principal.getName();
-		model.addAttribute("currentUser", userRepository.getByUserName(username));
+		setUserIfLogged(principal, model, userRepository);
 
 		return "redirect:/viewdeck/" + deck.getDeckId().toString();
 	}
