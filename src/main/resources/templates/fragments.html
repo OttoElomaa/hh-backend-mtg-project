@@ -17,9 +17,32 @@
 				<a th:href="@{/index}" class="col btn btn-primary">Index</a>
 				<a th:href="@{/userlist}" class="col btn btn-info">Users</a>
 				<a th:href="@{/cardlist}" class="col btn btn-primary">Cards</a>
-				<div class="col">Current user:</div>
-				<th:if></th:if>
-				<div class="col" th:text="${currentUser} != null ? ${currentUser.profileName} : 'Not logged in'"></div>
+
+				
+				<!-- IF USER IS LOGGED IN -->
+				<div class="col" th:if="${currentUser} != null">
+					<div>Current user:</div>
+				</div>
+				<div class="col" th:if="${currentUser} != null">
+					<div th:text="${currentUser.profileName}"></div>
+				</div>
+
+				<!-- IF NO USER IS LOGGED IN -->
+				<div class="col" th:if="${currentUser} == null">
+					<a th:href="@{/login}" class="col btn btn-light" style="background-color: beige;">Login</a>
+				</div>
+				<div class="col" th:if="${currentUser} == null">
+					<a th:href="@{/login}" class="col btn btn-light" style="background-color: beige;">Register</a>
+				</div>
+
+				<!-- <div class="col" th:if="${currentUser} == null">
+					<div >Current user:</div>
+				</div>
+				<div class="col" th:if="${currentUser} == null">
+					<div >No logged user</div>
+				</div> -->
+
+				<!-- <div class="col" th:text="${currentUser} != null ? ${currentUser.profileName} : 'Not logged in'"></div> -->
 			</div>
 		</div>
 	</div>
