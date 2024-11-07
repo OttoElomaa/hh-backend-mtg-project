@@ -221,11 +221,16 @@ public class MtgProjectApplication {
 
 			// ENCODER.Encode WRITTEN USING ChatGpt
 			// Username: user1, user2, password: user1, user2
-			appUserRepo.save(new AppUser(user1.getUserName(),
-			passwordEncoder.encode("user1"), "USER"));
+			AppUser appu1 = new AppUser(user1.getUserName(),
+			passwordEncoder.encode("user1"), "USER");
+			AppUser appu2 = new AppUser(user2.getUserName(),
+			passwordEncoder.encode("user2"), "USER");
+
+			appu1.setMtgUser(user1);
+			appUserRepo.save(appu1);
 	
-			appUserRepo.save(new AppUser(user2.getUserName(),
-			passwordEncoder.encode("user2"), "USER"));
+			appu2.setMtgUser(user2);
+			appUserRepo.save(appu2);
 
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF

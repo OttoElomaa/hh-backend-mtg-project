@@ -35,7 +35,9 @@ public class IndexController {
 		setUserIfLogged(principal, model, uRepository);
 		return "/index";
 
-
 	}
+
+
+
 
 }

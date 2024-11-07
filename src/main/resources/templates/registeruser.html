@@ -1,0 +1,32 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>MTG App - Register User</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+</head>
+
+<body>
+	<h1>Register new user</h1>
+
+	<div>
+		<form th:object="${newAppUser}" th:action="@{/savenewuser}" action="#" method="post">
+
+
+			<label for="name">Username</label>
+			<input type="text" id="name" th:field="*{username}" />
+			<br/>
+			<label for="desc">Password</label>
+			<input type="text" id="desc" th:field="*{password}" />
+			<br/>
+
+			<br/>
+
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+	
+
+</body>
+</html>

@@ -5,14 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
 public class AppUser {
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(nullable=false, updatable=false)
-    private Long id;
+    private Long appId;
     
     @Column(nullable=false, unique=true)
     private String username;
@@ -22,6 +24,9 @@ public class AppUser {
     
     @Column(nullable=false)
     private String role;
+
+    @OneToOne(mappedBy = "appUser")
+    private MtgUser mtgUser;
 
 
     // Constructors, getters and setters  
@@ -36,11 +41,11 @@ public class AppUser {
     }
 
     public Long getId() {
-        return id;
+        return appId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.appId = id;
     }
 
     public String getUsername() {
@@ -67,9 +72,25 @@ public class AppUser {
         this.role = role;
     }
 
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public MtgUser getMtgUser() {
+        return mtgUser;
+    }
+
+    public void setMtgUser(MtgUser mtgUser) {
+        this.mtgUser = mtgUser;
+    }
+
     @Override
     public String toString() {
-        return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+        return "AppUser [id=" + appId + ", username=" + username + ", password=" + password + ", role=" + role + "]";
     }
     
  

@@ -2,13 +2,17 @@ package hh.backend.mtgproject.domain;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -19,6 +23,7 @@ public class MtgUser {
     // ENTITY INTERFACES WITH THE ACTUAL TABLE IN DATABASE
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(nullable=false, updatable=false)
 	private Long userId;
 
 	@Column(nullable=false, unique=true)
@@ -27,6 +32,10 @@ public class MtgUser {
 	private String profileName;
 	private String profileBio;
 
+
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "appUser_id", referencedColumnName = "appId")
+    private AppUser appUser;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy ="user")
 	private List<Deck> decks;
@@ -93,6 +102,16 @@ public class MtgUser {
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", profileName=" + profileName + ", profileBio="
 				+ profileBio + ", decks=" + decks + "]";
+	}
+
+
+	public AppUser getAppUser() {
+		return appUser;
+	}
+
+
+	public void setAppUser(AppUser appUser) {
+		this.appUser = appUser;
 	}
 
 	

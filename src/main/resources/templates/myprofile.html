@@ -13,20 +13,91 @@
 <body>
 
 	<div class="container text-center">
+
+
 		<header>
 			<div th:replace="~{fragments :: headerfragment}"></div>
-		</header> 
+		</header>
 		<br /><br />
 
-		<h1>Your profile</h1>
-		<br/>
-		<p>Welcome to the MTG App! This is your profile</p>
-		<br/>
-		<p>This app is for viewing cards for the 'Magic: the gathering' card game... and for making your own decks!</p>
-		<p>Currently only showing a limited amount of test data.</p>
+		<!--ROW 1: HEADLINE - CARD NAME-->
+		<div class="row">
+			<div class="col">
+				<h1 th:text="${selectedUser.profileName}">Card Info</h1>
+				<h2>My profile</h2>
+			</div>
+		</div>
 
+		<!--ROW 2 - IMAAGE AND INFO-->
+		<div class="row">
+
+
+			<table class="table table-dark table-striped-columns">
+
+				<thead>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td scope="col">User name</td>
+						<td scope="col" th:text="${selectedUser.userName}">id</td>
+					</tr>
+					<tr>
+						<td>Profile Name</td>
+						<td th:text="${selectedUser.profileName}">id</td>
+					</tr>
+					<tr>
+						<td>Biography</td>
+						<td th:text="${selectedUser.profileBio}">id</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<table class="table table-striped-columns">
+
+				<thead>
+					<th>Deck Name</th>
+					<th>Description</th>
+					<th></th>
+				</thead>
+
+				<tbody>
+					<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
+				THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
+					<tr th:each="deck : ${selectedUser.decks}">
+
+						<td th:text="${deck.name}">id</td>
+						<td th:text="${deck.description}">id</td>
+
+						<td><a th:href="@{/viewdeck/{id}(id=${deck.deckId})}" type="button" class="btn btn-primary">
+								View + Options
+							</a></td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+
+		<div class="row">
+			<div class="col">
+				<a th:href="@{/createdeck}" type="button" class="btn btn-primary">Create New Deck</a>
+			</div>
+		</div>
+
+		<br/>
+
+		<div class="row">
+			<div class="col">
+				<a th:href="@{/userlist}" type="button" class="btn btn-primary">Back to User List</a>
+			</div>
+		</div>
 
 	</div>
+	</div>
+
+
 
 </body>
 
