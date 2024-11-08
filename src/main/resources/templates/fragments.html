@@ -14,17 +14,28 @@
 	<div th:fragment="headerfragment">
 		<div class="container">
 			<div class="row">
-				<a th:href="@{/index}" class="col btn btn-primary">Index</a>
-				<a th:href="@{/userlist}" class="col btn btn-info">Users</a>
-				<a th:href="@{/cardlist}" class="col btn btn-primary">Cards</a>
+				<div class="col">
+					<a th:href="@{/index}" class="col btn btn-primary">Index</a>
+				</div>
+				<div class="col">
+					<a th:href="@{/userlist}" class="col btn btn-info">Users</a>
+				</div>
+				<div class="col">
+					<a th:href="@{/cardlist}" class="col btn btn-primary">Cards</a>
+				</div>
+				
+				
+				
 
 				
 				<!-- IF USER IS LOGGED IN -->
 				<div class="col" th:if="${currentUser} != null">
 					<div>Current user:</div>
+					<div th:text="${currentUser.profileName}"></div>
 				</div>
 				<div class="col" th:if="${currentUser} != null">
-					<div th:text="${currentUser.profileName}"></div>
+					<a th:href="@{/myprofile}" class="col btn btn-light" style="background-color: beige;">My profile</a>
+					<a th:href="@{/logout}" class="col btn btn-light" style="background-color: beige;">Logout</a>
 				</div>
 
 				<!-- IF NO USER IS LOGGED IN -->

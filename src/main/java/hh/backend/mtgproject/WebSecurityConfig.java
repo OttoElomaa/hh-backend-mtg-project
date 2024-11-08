@@ -50,6 +50,7 @@ public class WebSecurityConfig {
                         .defaultSuccessUrl("/userlist", true)
                         .permitAll())
                 .logout(logout -> logout
+                        .logoutSuccessUrl("/index")
                         .permitAll());
         return http.build();
     }

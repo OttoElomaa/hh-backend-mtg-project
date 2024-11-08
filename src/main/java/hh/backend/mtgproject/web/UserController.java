@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import hh.backend.mtgproject.domain.AppUser;
 import hh.backend.mtgproject.domain.AppUserRepository;
+import hh.backend.mtgproject.domain.Deck;
 import hh.backend.mtgproject.domain.MtgUser;
 import hh.backend.mtgproject.domain.MtgUserRepository;
 
@@ -67,6 +68,23 @@ public class UserController {
 	}
 
 
+	@RequestMapping(value = "/myprofile")
+	public String viewMyProfile(Model model, Principal principal) {
+
+		setUserIfLogged(principal, model, repository);
+
+		// SHOW PROFILE ONLY IF LOGGED IN
+		// -> THEN SHOW PERSONAL PROFILE WITH EDIT TOOLS
+		if (principal != null) {
+			model.addAttribute("selectedUser", repository.getByUserName(principal.getName()));
+			return "myprofile";
+			}
+		
+		// OTHERWISE, SHOW OTHER USER'S GENERIC USER PAGE
+		return "userlist";
+	}
+
+
 
 
 	// FUNCTIONS ACTIVATED DURING THE EDITING OF YOUR OWN PROFILE
@@ -83,6 +101,11 @@ public class UserController {
 	@PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/savemodifieduser")
     public String saveModified(MtgUser editedUser){
+
+		// MOVE CARD INFO FROM OLD DECK TO NEW DECK
+		MtgUser oldUser = repository.findById(editedUser.getUserId()).get();
+		editedUser.setAppUser(oldUser.getAppUser());
+
         repository.save(editedUser);
         return "redirect:/userlist";
     }
