@@ -3,6 +3,7 @@ package hh.backend.mtgproject.web;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,8 +69,10 @@ public class UserController {
 
 
 
-	// FUNCTIONS ACTIVATED DURING THE EDITING OF BOOKS IN BOOKLIST.HTML AND EDITBOOK.HTML
+	// FUNCTIONS ACTIVATED DURING THE EDITING OF YOUR OWN PROFILE
+	// editprofile.html. ONLY EDITS CURRENTUSER'S PROFILE
     
+	@PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/editprofile")
     public String editBook(Model model, Principal principal) {
 
@@ -77,7 +80,7 @@ public class UserController {
         return "editprofile";
     }
 
-
+	@PreAuthorize("hasRole('USER')")
     @PostMapping(value = "/savemodifieduser")
     public String saveModified(MtgUser editedUser){
         repository.save(editedUser);

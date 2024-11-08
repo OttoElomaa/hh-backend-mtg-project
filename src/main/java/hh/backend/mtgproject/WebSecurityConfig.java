@@ -36,11 +36,11 @@ public class WebSecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/index").permitAll()
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/index", "/").permitAll()
                         .requestMatchers("/cardlist").permitAll()
+                        .requestMatchers(antMatcher("/viewcard/**")).permitAll()
                         .requestMatchers("/userlist").permitAll()
-                        .requestMatchers("/registeruser").permitAll()
+                        .requestMatchers(antMatcher("/viewuser/**")).permitAll()
                         .requestMatchers("/signup").permitAll()
                         .requestMatchers("/saveuser").permitAll()
                         .requestMatchers(antMatcher("/css/**")).permitAll() // Enable css when logged out

@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,6 +68,8 @@ public class DeckController {
 		return "createdeck";
 	}
 
+	// USER CAN ONLY SAVE DECKS TO THEIR _OWN_ PROFILE
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping(value = "/savenew")
 	public String saveNew(Deck newDeck, Model model, Principal principal) {
 		
@@ -80,6 +83,8 @@ public class DeckController {
 		return "redirect:/userlist";
 	}
 
+
+
 	// VIEW DECK
 	@RequestMapping(value = "/viewdeck/{id}")
 	public String viewCard(@PathVariable("id") Long deckId, Model model, Principal principal) {
@@ -89,7 +94,10 @@ public class DeckController {
 		return "viewdeck";
 	}
 
+
+
 	// SAVE CARD IN DECK
+	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/savecardindeck")
 	public String saveNewCardToDeck(@RequestParam Long cardId, @RequestParam Long deckId, 
 	Principal principal, Model model) {
