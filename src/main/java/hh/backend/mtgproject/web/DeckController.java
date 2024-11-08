@@ -150,7 +150,7 @@ public class DeckController {
 		editedDeck.setCardsInDeck(oldDeck.getCardsInDeck());
 
         repository.save(editedDeck);
-        return "redirect:/index";
+        return "redirect:/myprofile";
     }
 
 }

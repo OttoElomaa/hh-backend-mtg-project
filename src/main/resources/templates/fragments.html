@@ -15,13 +15,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<a th:href="@{/index}" class="col btn btn-primary">Index</a>
+					<a th:href="@{/index}" class="col btn btn-primary" style="background-color: #3C2826">Index</a>
 				</div>
 				<div class="col">
-					<a th:href="@{/userlist}" class="col btn btn-info">Users</a>
+					<a th:href="@{/userlist}" class="col btn btn-info" style="background-color: #6D3530">Users</a>
 				</div>
 				<div class="col">
-					<a th:href="@{/cardlist}" class="col btn btn-primary">Cards</a>
+					<a th:href="@{/cardlist}" class="col btn btn-primary" style="background-color: #BE6E4B">Cards</a>
 				</div>
 				
 				
@@ -34,16 +34,17 @@
 					<div th:text="${currentUser.profileName}"></div>
 				</div>
 				<div class="col" th:if="${currentUser} != null">
-					<a th:href="@{/myprofile}" class="col btn btn-light" style="background-color: beige;">My profile</a>
-					<a th:href="@{/logout}" class="col btn btn-light" style="background-color: beige;">Logout</a>
+					<a th:href="@{/myprofile}" class="col btn btn-primary" style="background-color: #BE6E4B;">My profile</a>
+					<a th:href="@{/logout}" class="col btn btn-light" style="background-color: #EFD1B6;">Logout</a>
 				</div>
 
 				<!-- IF NO USER IS LOGGED IN -->
 				<div class="col" th:if="${currentUser} == null">
-					<a th:href="@{/login}" class="col btn btn-light" style="background-color: beige;">Login</a>
+					<a>No logged user</a>
 				</div>
 				<div class="col" th:if="${currentUser} == null">
-					<a th:href="@{/signup}" class="col btn btn-light" style="background-color: beige;">Register</a>
+					<a th:href="@{/login}" class="col btn btn-primary" style="background-color: #BE6E4B;">Login</a>
+					<a th:href="@{/signup}" class="col btn btn-light" style="background-color: #EFD1B6;">Register</a>
 				</div>
 
 				<!-- <div class="col" th:if="${currentUser} == null">
