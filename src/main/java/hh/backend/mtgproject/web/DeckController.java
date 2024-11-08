@@ -112,4 +112,45 @@ public class DeckController {
 		return "redirect:/viewdeck/" + deck.getDeckId().toString();
 	}
 
+
+
+
+	// FUNCTIONS ACTIVATED DURING THE EDITING OF A DECK BELONGING TO YOUR USER
+	// editdeck.html. ONLY EDITS CURRENTUSER'S DECK
+    
+	@PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/editdeck/{id}")
+    public String editDeck(@PathVariable("id") Long deckId, Model model, Principal principal) {
+
+		setUserIfLogged(principal, model, userRepository);
+		Deck toEdit = repository.findById(deckId).get();
+
+		// ONLY IF CURRENT USER == DECK.OWNER
+		if (principal != null) {
+			MtgUser currUser = userRepository.getByUserName(principal.getName());
+			if (currUser == toEdit.getUser()) {
+
+				model.addAttribute("currentDeck", toEdit);
+				return "editdeck";
+			}
+		}
+        return "userlist";
+    }
+
+	@PreAuthorize("hasRole('USER')")
+    @PostMapping(value = "/savemodifieddeck")
+    public String saveModified(Deck editedDeck, Model model, Principal principal){
+
+		// SET CURRENT USER AS DECK OWNER
+		setUserIfLogged(principal, model, userRepository);
+		editedDeck.setUser(userRepository.getByUserName(principal.getName()));
+
+		// MOVE CARD INFO FROM OLD DECK TO NEW DECK
+		Deck oldDeck = repository.findById(editedDeck.getDeckId()).get();
+		editedDeck.setCardsInDeck(oldDeck.getCardsInDeck());
+
+        repository.save(editedDeck);
+        return "redirect:/index";
+    }
+
 }

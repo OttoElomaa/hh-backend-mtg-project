@@ -74,7 +74,7 @@ public class UserController {
     
 	@PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/editprofile")
-    public String editBook(Model model, Principal principal) {
+    public String editProfile(Model model, Principal principal) {
 
 		setUserIfLogged(principal, model, repository);
         return "editprofile";

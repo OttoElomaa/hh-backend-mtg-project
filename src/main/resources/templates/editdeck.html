@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>MTG App - Edit Deck</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+</head>
+<body>
+	<h1>Edit Deck Info</h1>
+
+	<div>
+		<form th:object="${currentDeck}" th:action="@{/savemodifieddeck}" action="#" method="post">
+
+			<input type="hidden" th:field="*{deckId}" class="form-control"/>
+
+			<label for="title">Deck name</label>
+			<input type="text" id="title" th:field="*{name}" />
+			<br/>
+			<label for="auth">Description</label>
+			<input type="text" id="auth" th:field="*{description}" />
+			<br/>
+
+			
+
+			<input type="submit" class="btn btn-success" value="Save"></input>
+		</form>
+	</div>
+
+
+</body>
+</html>

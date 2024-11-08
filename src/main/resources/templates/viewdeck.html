@@ -81,11 +81,16 @@
 		</div>
 
 
-
+		<div class="row">
+			<div class="col">
+				<a th:href="@{/editdeck/{id}(id=${selectedDeck.deckId})}" type="button" class="btn btn-primary">Edit deck</a>
+			</div>
+		</div>
+		<br/>
 
 		<div class="row">
 			<div class="col">
-				<a th:href="@{/viewuser/{id}(id=${currentUser.userId})}" type="button" class="btn btn-primary">Back to User List</a>
+				<a th:href="@{/viewuser/{id}(id=${currentUser.userId})}" type="button" class="btn btn-primary">Back to User Page</a>
 			</div>
 		</div>
 
