@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>MTG App - Edit my profile</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
+</head>
+<body>
+	<h1>Edit Profile</h1>
+
+	<div>
+		<form th:object="${currentUser}" th:action="@{/savemodifieduser}" action="#" method="post">
+
+			<input type="hidden" th:field="*{userId}" class="form-control"/>
+			<input type="hidden" th:field="*{userName}"/>
+
+			<label for="title">Choose profile name</label>
+			<input type="text" id="title" th:field="*{profileName}" />
+			<br/>
+			<label for="auth">Write biography text</label>
+			<input type="text" id="auth" th:field="*{profileBio}" />
+			<br/>
+
+			
+
+			<input type="submit" class="btn btn-success" value="Save"></input>
+		</form>
+	</div>
+
+
+</body>
+</html>
