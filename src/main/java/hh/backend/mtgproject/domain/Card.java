@@ -3,6 +3,7 @@ package hh.backend.mtgproject.domain;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,8 @@ public class Card {
 
 	private String cardId;
 	private String cardName;
+
+	@Column(length = 1000)
 	private String oracleText;
 
 

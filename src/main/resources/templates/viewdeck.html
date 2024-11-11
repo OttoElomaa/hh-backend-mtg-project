@@ -59,8 +59,7 @@
 
 			<table class="table table-striped-columns">
 				<tbody>
-					<!--IN CONTROLLER, BOOK TABLE IS SAVED INTO 'BOOKS'
-				THEN THYMELEAF SHOWS THE ACCESSED BOOK DATA-->
+					<!--SHOW EACH CARD IN DECK-->
 					<tr th:each="card : ${selectedDeck.cardsInDeck}">
 
 						<td><img th:src="${card.imageUrl}" width=200 /></td>

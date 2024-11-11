@@ -91,8 +91,8 @@ public class MtgProjectApplication {
 
 				// ORACLE_TEXT HANDLING FOR NULL + TOO LONG
 				String oracl = itemGetStringOrAltText(item, "oracle_text", "Oracle Text Missing");
-				if (oracl.length() > 200) {
-					oracl = oracl.substring(0, 199);
+				if (oracl.length() > 1000) {
+					oracl = oracl.substring(0, 999);
 				}
 
 				// IMAGE URL
