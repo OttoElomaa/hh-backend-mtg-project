@@ -98,8 +98,10 @@ public class MtgProjectApplication {
 				// IMAGE URL
 				Map<String, Object> imagesListUrl = (Map<String, Object>) item.get("image_uris");
 				String imgUrl = "";
+				String imgSmallUrl = "";
 				if (imagesListUrl != null) {
 					imgUrl = (String) imagesListUrl.get("normal");
+					imgSmallUrl = (String) imagesListUrl.get("small");
 				}
 
 				// String powerStr = (String) item.get("power");
@@ -113,25 +115,17 @@ public class MtgProjectApplication {
 
 				List<String> producedMana = (List<String>) item.get("produced_mana");
 
-				// LIST TO ARRAY. SOURCE: Eng.Fouad on StackOverflow. Question - Convert list to
-				// array in Java [duplicate]
-				// https://stackoverflow.com/questions/9572795/convert-list-to-array-in-java
+				
 
 				// String[] colorIds = {};
 				List<String> colorIdList = (List<String>) item.get("color_identity");
-
-				// if (colorIdList != null) {
-				// colorIds = (new String[colorIdList.size()]);
-				// for(int i = 0; i < colorIdList.size(); i++) {
-				// colorIds[i] = colorIdList.get(i);
-				// };
-				// } // SOURCED PART ENDS
-
-				// log.info(name);
+				
+				String setName = (String) item.get("set_name");
+				String cardId = (String) item.get("id");
 
 				// MOST IMPORTANT PART
 				// Create and add a new Card to the list
-				Card card = new Card("a1a1", name, oracl, imgUrl, "Set of Setness",
+				Card card = new Card(cardId, name, oracl, imgUrl, setName,
 						typeText, colorIdList, manaCostStr, producedMana, power, toughness);
 				oldCards.add(card);
 			}
@@ -199,9 +193,11 @@ public class MtgProjectApplication {
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
-			// cards =
-			// readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=neo",
-			// cards, templ);
+			
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=lci", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=lci", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=instant+set=lci", cards, templ);
+			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=sorcery+set=lci", cards, templ);
 
 			// cards = readApiToCardList("", cards, templ);
 
