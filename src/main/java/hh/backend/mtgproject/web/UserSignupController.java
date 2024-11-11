@@ -33,15 +33,6 @@ public class UserSignupController {
 	@Autowired
 	private AppUserRepository appUserRepository;
 
-	private static void setUserIfLogged(Principal principal, Model model, MtgUserRepository uRepository) {
-
-		// KYSY PRINCIPAL-Oliolta KUKA ON KÄYTTÄJÄ
-		if (principal != null) {
-			String username = principal.getName();
-			model.addAttribute("currentUser", uRepository.getByUserName(username));
-		} 
-	}
-
 
 	// --------------------------------------------------------------------------
 	// REGISTER NEW USER

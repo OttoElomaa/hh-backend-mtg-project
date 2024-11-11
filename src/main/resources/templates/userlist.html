@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<title>MTG App - User List</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
-	
+
 </head>
 
 <body>
@@ -19,7 +20,7 @@
 
 		<h1>User List</h1>
 
-		
+
 
 		<table class="table table-striped">
 			<thead class="table-dark" style="background-color: #3C2826;">
@@ -42,6 +43,9 @@
 
 					<td><a th:href="@{/viewuser/{id}(id=${user.userId})}" type="button" class="btn btn-primary">View +
 							Options</a></td>
+					<td sec:authorize="hasRole('ADMIN')">
+						<a th:href="@{/deleteuser/{id}(id=${user.userId})}" type="button" class="btn btn-warning">
+							Delete user</a></td>
 				</tr>
 			</tbody>
 

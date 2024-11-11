@@ -60,6 +60,7 @@ public class DeckController {
 
 
 	// DECK CREATION
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	@RequestMapping(value = "/createdeck")
 	public String addBook(Model model, Principal principal) {
 		model.addAttribute("newDeck", new Deck());
@@ -70,7 +71,7 @@ public class DeckController {
 	}
 
 	// USER CAN ONLY SAVE DECKS TO THEIR _OWN_ PROFILE
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	@PostMapping(value = "/savenew")
 	public String saveNew(Deck newDeck, Model model, Principal principal) {
 		
@@ -81,7 +82,7 @@ public class DeckController {
 		newDeck.setUser(setUser);
 		repository.save(newDeck);
 
-		return "redirect:/userlist";
+		return "redirect:/myprofile";
 	}
 
 
@@ -98,7 +99,7 @@ public class DeckController {
 
 
 	// SAVE CARD IN DECK
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	@PostMapping("/savecardindeck")
 	public String saveNewCardToDeck(@RequestParam Long cardId, @RequestParam Long deckId, 
 	Principal principal, Model model) {
@@ -117,7 +118,7 @@ public class DeckController {
 
 	// DELETE FUNCTION FOR DECKS SELECTED IN MYPROFILE.HTML
 
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @GetMapping(value = "/deletedeck/{id}")
     public String deleteBook(@PathVariable("id") Long deckId, Model model, Principal principal) {
 
@@ -138,7 +139,7 @@ public class DeckController {
 	// FUNCTIONS ACTIVATED DURING THE EDITING OF A DECK BELONGING TO YOUR USER
 	// editdeck.html. ONLY EDITS CURRENTUSER'S DECK
     
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @RequestMapping(value = "/editdeck/{id}")
     public String editDeck(@PathVariable("id") Long deckId, Model model, Principal principal) {
 
@@ -157,7 +158,7 @@ public class DeckController {
         return "userlist";
     }
 
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @PostMapping(value = "/savemodifieddeck")
     public String saveModified(Deck editedDeck, Model model, Principal principal){
 

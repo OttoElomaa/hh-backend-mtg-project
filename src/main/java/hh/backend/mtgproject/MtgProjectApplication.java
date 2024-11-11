@@ -173,9 +173,13 @@ public class MtgProjectApplication {
 
 			MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
 			MtgUser user2 = new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user");
+
+			MtgUser user3 = new MtgUser("admin1", "AdminUser", "Hi! I'm an MTG App Admin user");
+
 			// ADD USERS TO DATABASE
 			userRepository.save(user1);
 			userRepository.save(user2);
+			userRepository.save(user3);
 
 			Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
 			deck1.setUser(user1);
@@ -223,14 +227,21 @@ public class MtgProjectApplication {
 			// Username: user1, user2, password: user1, user2
 			AppUser appu1 = new AppUser(user1.getUserName(),
 			passwordEncoder.encode("user1"), "USER");
+
 			AppUser appu2 = new AppUser(user2.getUserName(),
 			passwordEncoder.encode("user2"), "USER");
+
+			AppUser appu3 = new AppUser(user3.getUserName(),
+			passwordEncoder.encode("admin1"), "ADMIN");
 
 			appu1.setMtgUser(user1);
 			appUserRepo.save(appu1);
 	
 			appu2.setMtgUser(user2);
 			appUserRepo.save(appu2);
+
+			appu3.setMtgUser(user3);
+			appUserRepo.save(appu3);
 
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF

@@ -21,10 +21,12 @@ import hh.backend.mtgproject.domain.MtgUserRepository;
 @Controller
 public class UserController {
 
+
 	@Autowired
 	private MtgUserRepository repository;
 	@Autowired
 	private AppUserRepository appUserRepository;
+
 
 	private static void setUserIfLogged(Principal principal, Model model, MtgUserRepository uRepository) {
 
@@ -36,6 +38,7 @@ public class UserController {
 	}
 
 
+
 	@RequestMapping(value = "/userlist")
 	public String userList(Model model, Principal principal) {
 		model.addAttribute("mtgUsers", repository.findAll());
@@ -44,6 +47,8 @@ public class UserController {
 
 		return "userlist";
 	}
+
+
 
 	@RequestMapping(value = "/viewuser/{id}")
 	public String viewUser(@PathVariable("id") Long userId, Model model, Principal principal) {
@@ -68,6 +73,11 @@ public class UserController {
 	}
 
 
+
+	// FUNCTION TO SPECIFICALLY VIEW OWN PROFILE
+	// AFTER CRUD ACTIONS + BY PRESSING 'MY PROFILE' BUTTON
+
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
 	@RequestMapping(value = "/myprofile")
 	public String viewMyProfile(Model model, Principal principal) {
 
@@ -90,7 +100,7 @@ public class UserController {
 	// FUNCTIONS ACTIVATED DURING THE EDITING OF YOUR OWN PROFILE
 	// editprofile.html. ONLY EDITS CURRENTUSER'S PROFILE
     
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @RequestMapping(value = "/editprofile")
     public String editProfile(Model model, Principal principal) {
 
@@ -98,7 +108,7 @@ public class UserController {
         return "editprofile";
     }
 
-	@PreAuthorize("hasRole('USER')")
+	@PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     @PostMapping(value = "/savemodifieduser")
     public String saveModified(MtgUser editedUser){
 
@@ -109,6 +119,16 @@ public class UserController {
         repository.save(editedUser);
         return "redirect:/userlist";
     }
+
+
+	    // FUNCTION TO DELETE USER SELECTED IN USERLIST.HTML BY AN ADMIN
+
+		@PreAuthorize("hasRole('ADMIN')")
+		@GetMapping(value = "/deleteuser/{id}")
+		public String deleteBook(@PathVariable("id") Long userId, Model model) {
+			repository.deleteById(userId);
+			return "redirect:/userlist";
+		}
 
 
 	
