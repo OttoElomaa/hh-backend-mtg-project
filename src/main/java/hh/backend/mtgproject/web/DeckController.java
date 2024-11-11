@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,6 +112,25 @@ public class DeckController {
 
 		return "redirect:/viewdeck/" + deck.getDeckId().toString();
 	}
+
+
+
+	// DELETE FUNCTION FOR DECKS SELECTED IN MYPROFILE.HTML
+
+	@PreAuthorize("hasRole('USER')")
+    @GetMapping(value = "/deletedeck/{id}")
+    public String deleteBook(@PathVariable("id") Long deckId, Model model, Principal principal) {
+
+		setUserIfLogged(principal, model, userRepository);
+		Deck selectedDeck = repository.findById(deckId).get();
+		MtgUser currUser = userRepository.getByUserName(principal.getName());
+
+		if (currUser == selectedDeck.getUser()) {
+        	repository.deleteById(deckId);
+        	return "redirect:/myprofile";
+		}
+		return "redirect:/myprofile";
+    }
 
 
 

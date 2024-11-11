@@ -71,8 +71,8 @@
 						<td th:text="${deck.description}">id</td>
 
 						<td><a th:href="@{/viewdeck/{id}(id=${deck.deckId})}" type="button" class="btn btn-primary">
-								View + Options
-							</a></td>
+								View + Options </a></td>
+						<td><a th:href="@{/deletedeck/{id}(id=${deck.deckId})}" type="button" class="btn btn-danger">Delete</a></td>
 					</tr>
 				</tbody>
 
