@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,10 @@ public class Deck {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long deckId;
 
+	@Column(name="deck_name")
 	private String name;
+
+	@Column(name="deck_description")
 	private String description;
 
 

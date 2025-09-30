@@ -16,13 +16,13 @@ public class AppUser {
     @Column(nullable=false, updatable=false)
     private Long appId;
     
-    @Column(nullable=false, unique=true)
+    @Column(name = "app_user_name", nullable=false, unique=true)
     private String username;
        
-    @Column(nullable=false)
+    @Column(name = "app_password", nullable=false)
     private String password;
     
-    @Column(nullable=false)
+    @Column(name = "role", nullable=false)
     private String role;
 
     @OneToOne(mappedBy = "appUser")

@@ -1,7 +1,7 @@
 package hh.backend.mtgproject;
 
 import java.util.ArrayList;
-
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +27,7 @@ import hh.backend.mtgproject.domain.MtgUserRepository;
 @SpringBootApplication
 public class MtgProjectApplication {
 
-	
 	private List<Card> cards = new ArrayList<>();
-
 
 	// CHATGPT START
 	// RestTemplate Reads the API fetched info
@@ -37,12 +35,12 @@ public class MtgProjectApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-	
+
 	// Define the PasswordEncoder bean
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	// CHATGPT END
 
 	// CREATE NEW LOGGER ATTRIBUTE
@@ -115,11 +113,9 @@ public class MtgProjectApplication {
 
 				List<String> producedMana = (List<String>) item.get("produced_mana");
 
-				
-
 				// String[] colorIds = {};
 				List<String> colorIdList = (List<String>) item.get("color_identity");
-				
+
 				String setName = (String) item.get("set_name");
 				String cardId = (String) item.get("id");
 
@@ -154,6 +150,101 @@ public class MtgProjectApplication {
 		return returnInt;
 	}
 
+	// SOURCE: Jun 20, 2011. User Atreys. StackOverflow. Easy way to convert
+	// iterable to collection.
+	// https://stackoverflow.com/questions/6416706/easy-way-to-convert-iterable-to-collection
+	public static <E> Collection<E> iterToCollection(Iterable<E> iter) {
+		Collection<E> list = new ArrayList<E>();
+		for (E item : iter) {
+			list.add(item);
+		}
+		return list;
+	}
+
+
+	// public static void autorunOldVersion() {
+		
+
+	// 			MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
+	// 			MtgUser user2 = new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user");
+
+	// 			MtgUser user3 = new MtgUser("admin1", "AdminUser", "Hi! I'm an MTG App Admin user");
+
+	// 			// ADD USERS TO DATABASE
+	// 			userRepository.save(user1);
+	// 			userRepository.save(user2);
+	// 			userRepository.save(user3);
+
+	// 			// ENCODER.Encode WRITTEN USING ChatGpt
+	// 			// Username: user1, user2, password: user1, user2
+	// 			AppUser appu1 = new AppUser(user1.getUserName(),
+	// 					passwordEncoder.encode("user1"), "USER");
+
+	// 			AppUser appu2 = new AppUser(user2.getUserName(),
+	// 					passwordEncoder.encode("user2"), "USER");
+
+	// 			AppUser appu3 = new AppUser(user3.getUserName(),
+	// 					passwordEncoder.encode("admin1"), "ADMIN");
+
+	// 			appu1.setMtgUser(user1);
+	// 			appUserRepo.save(appu1);
+
+	// 			appu2.setMtgUser(user2);
+	// 			appUserRepo.save(appu2);
+
+	// 			appu3.setMtgUser(user3);
+	// 			appUserRepo.save(appu3);
+
+	// 			Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
+	// 			deck1.setUser(user1);
+	// 			Deck deck2 = new Deck("Deck 2", "Cool deck 2");
+	// 			deck2.setUser(user1);
+
+	// 			deckRepository.save(deck1);
+	// 			deckRepository.save(deck2);
+
+			
+
+	// 		// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
+	// 		// REPLACES 'cards' WITH NEW VERSION OF ITSELF
+	// 		// add:
+
+	// 		// cards =
+	// 		// readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo",cards,
+	// 		// tem);pl
+			
+
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
+
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=lci", cards, templ);
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=lci", cards, templ);
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=instant+set=lci", cards, templ);
+	// 			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=sorcery+set=lci", cards, templ);
+
+	// 			// cards = readApiToCardList("", cards, templ);
+
+	// 			// ADD THE TEST DATA: CARDS
+	// 			log.info("In App: Save a couple of cards");
+
+	// 			for (Card card : cards) {
+	// 				cardRepository.save(card);
+	// 			}
+			
+
+	// 		// LOG THE INFO IMMEDIATELY FOR DEBUG
+	// 		// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF
+	// 		log.info("In app: Fetch all cards");
+	// 		for (Card card : cardRepository.findAll()) {
+	// 			log.info(card.toString());
+	// 		}
+
+	// 		log.info("In app: Fetching complete");
+
+	// }
+
+
 	// testidatan luonti H2-testitietokantaan aina sovelluksen käynnistyessä
 	@Bean
 	public CommandLineRunner MtgAppRunner(RestTemplate templ, PasswordEncoder passwordEncoder,
@@ -162,82 +253,79 @@ public class MtgProjectApplication {
 
 		return (args) -> {
 
-			ArrayList<String> list2 = new ArrayList<>();
-			// String[] array1 = {"a","b"};
+			Iterable<MtgUser> usersIter = userRepository.findAll();
+			Collection<MtgUser> users = iterToCollection(usersIter);
+			if (users.isEmpty()) {
 
-			MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
-			MtgUser user2 = new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user");
+				MtgUser user1 = new MtgUser("user1", "CoolUser", "Hi! I'm a cool MTG App user");
+				MtgUser user2 = new MtgUser("user2", "UserTwo", "I'm also a cool MTG App user");
 
-			MtgUser user3 = new MtgUser("admin1", "AdminUser", "Hi! I'm an MTG App Admin user");
+				MtgUser user3 = new MtgUser("admin1", "AdminUser", "Hi! I'm an MTG App Admin user");
 
-			// ADD USERS TO DATABASE
-			userRepository.save(user1);
-			userRepository.save(user2);
-			userRepository.save(user3);
+				// ADD USERS TO DATABASE
+				userRepository.save(user1);
+				userRepository.save(user2);
+				userRepository.save(user3);
 
-			Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
-			deck1.setUser(user1);
-			Deck deck2 = new Deck("Deck 2", "Cool deck 2");
-			deck2.setUser(user1);
+				// ENCODER.Encode WRITTEN USING ChatGpt
+				// Username: user1, user2, password: user1, user2
+				AppUser appu1 = new AppUser(user1.getUserName(),
+						passwordEncoder.encode("user1"), "USER");
 
-			deckRepository.save(deck1);
-			deckRepository.save(deck2);
+				AppUser appu2 = new AppUser(user2.getUserName(),
+						passwordEncoder.encode("user2"), "USER");
+
+				AppUser appu3 = new AppUser(user3.getUserName(),
+						passwordEncoder.encode("admin1"), "ADMIN");
+
+				appu1.setMtgUser(user1);
+				appUserRepo.save(appu1);
+
+				appu2.setMtgUser(user2);
+				appUserRepo.save(appu2);
+
+				appu3.setMtgUser(user3);
+				appUserRepo.save(appu3);
+
+				Deck deck1 = new Deck("Deck 1", "Cool deck of cards");
+				deck1.setUser(user1);
+				Deck deck2 = new Deck("Deck 2", "Cool deck 2");
+				deck2.setUser(user1);
+
+				deckRepository.save(deck1);
+				deckRepository.save(deck2);
+
+			}
 
 			// CALLING MY CUSTOM FUNC - API CALL + PARSE RESULTS
 			// REPLACES 'cards' WITH NEW VERSION OF ITSELF
 			// add:
 
 			// cards =
-			// readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo",
-			// cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
-			
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=lci", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=lci", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=instant+set=lci", cards, templ);
-			cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=sorcery+set=lci", cards, templ);
+			// readApiToCardList("https://api.scryfall.com/cards/search?q=+t=snake+set=neo",cards,
+			// tem);pl
+			Iterable<Card> cardsIter = cardRepository.findAll();
+			Collection<Card> cardsToCheck = iterToCollection(cardsIter);
+			if (cardsToCheck.isEmpty()) {
 
-			// cards = readApiToCardList("", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=creature+set=neo", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=neo", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=artifact+set=neo", cards, templ);
 
-			// ADD THE TEST DATA: CARDS
-			log.info("In App: Save a couple of cards");
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=land+set=lci", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=enchantment+set=lci", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=instant+set=lci", cards, templ);
+				cards = readApiToCardList("https://api.scryfall.com/cards/search?q=+t=sorcery+set=lci", cards, templ);
 
-			for (Card card : cards) {
-				cardRepository.save(card);
+				// cards = readApiToCardList("", cards, templ);
+
+				// ADD THE TEST DATA: CARDS
+				log.info("In App: Save a couple of cards");
+
+				for (Card card : cards) {
+					cardRepository.save(card);
+				}
 			}
-
-			// Card card1 = new Card("a1a1", "Cool Guy", "This guy is
-			// cool","https://cards.scryfall.io/normal/front/1/5/153b7197-57a7-4e38-bd4a-4550b9d22dd8.jpg?1562900088","Set
-			// of Setness",
-			// "Creature - Cool Human", list2, "G", list2, 3, 4);
-
-			// Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is
-			// cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set
-			// of Setness",
-			// "Creature - Cool Wolf", list2,"G", list2, 2, 3);
-
-
-			// ENCODER.Encode WRITTEN USING ChatGpt
-			// Username: user1, user2, password: user1, user2
-			AppUser appu1 = new AppUser(user1.getUserName(),
-			passwordEncoder.encode("user1"), "USER");
-
-			AppUser appu2 = new AppUser(user2.getUserName(),
-			passwordEncoder.encode("user2"), "USER");
-
-			AppUser appu3 = new AppUser(user3.getUserName(),
-			passwordEncoder.encode("admin1"), "ADMIN");
-
-			appu1.setMtgUser(user1);
-			appUserRepo.save(appu1);
-	
-			appu2.setMtgUser(user2);
-			appUserRepo.save(appu2);
-
-			appu3.setMtgUser(user3);
-			appUserRepo.save(appu3);
 
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF
@@ -252,3 +340,13 @@ public class MtgProjectApplication {
 	}
 
 }
+
+// Card card1 = new Card("a1a1", "Cool Guy", "This guy is
+// cool","https://cards.scryfall.io/normal/front/1/5/153b7197-57a7-4e38-bd4a-4550b9d22dd8.jpg?1562900088","Set
+// of Setness",
+// "Creature - Cool Human", list2, "G", list2, 3, 4);
+
+// Card card2 = new Card("a1a1", "Cool Wolf", "This wolf is
+// cool","https://cards.scryfall.io/normal/front/f/f/ff4661dd-2075-48c3-b19b-fc7f8aaba1b8.jpg?1562667998","Set
+// of Setness",
+// "Creature - Cool Wolf", list2,"G", list2, 2, 3);

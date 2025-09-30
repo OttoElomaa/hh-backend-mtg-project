@@ -26,10 +26,12 @@ public class MtgUser {
 	@Column(nullable=false, updatable=false)
 	private Long userId;
 
-	@Column(nullable=false, unique=true)
+	@Column(name = "mtg_user_name", nullable=false, unique=true)
 	private String userName;
 	
+	@Column
 	private String profileName;
+	@Column
 	private String profileBio;
 
 
