@@ -23,7 +23,7 @@ public class Deck {
 	// PRIMARY KEY OF "TABLE" == ENTITY
     // ENTITY INTERFACES WITH THE ACTUAL TABLE IN DATABASE
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long deckId;
 
 	@Column(name="deck_name")

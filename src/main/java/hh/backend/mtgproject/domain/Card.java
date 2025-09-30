@@ -17,7 +17,7 @@ public class Card {
 	// PRIMARY KEY OF "TABLE" == ENTITY
     // ENTITY INTERFACES WITH THE ACTUAL TABLE IN DATABASE
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String cardId;

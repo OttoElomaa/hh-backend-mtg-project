@@ -22,7 +22,7 @@ public class MtgUser {
 	// PRIMARY KEY OF "TABLE" == ENTITY
     // ENTITY INTERFACES WITH THE ACTUAL TABLE IN DATABASE
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable=false, updatable=false)
 	private Long userId;
 

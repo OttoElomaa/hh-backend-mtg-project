@@ -12,7 +12,7 @@ import jakarta.persistence.OneToOne;
 public class AppUser {
     
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(nullable=false, updatable=false)
     private Long appId;
     
@@ -22,7 +22,7 @@ public class AppUser {
     @Column(name = "app_password", nullable=false)
     private String password;
     
-    @Column(name = "role", nullable=false)
+    @Column(name = "app_role", nullable=false)
     private String role;
 
     @OneToOne(mappedBy = "appUser")

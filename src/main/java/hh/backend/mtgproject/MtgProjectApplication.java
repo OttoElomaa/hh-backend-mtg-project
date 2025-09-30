@@ -330,8 +330,12 @@ public class MtgProjectApplication {
 			// LOG THE INFO IMMEDIATELY FOR DEBUG
 			// LOGGER IS GOOD: It can be TURNED ON FOR DEBUG, then TURNED OFF
 			log.info("In app: Fetch all cards");
+			int counter = 1;
 			for (Card card : cardRepository.findAll()) {
-				log.info(card.toString());
+				if (counter < 5) {
+					log.info(card.toString());
+				}
+				counter += 1;
 			}
 
 			log.info("In app: Fetching complete");
